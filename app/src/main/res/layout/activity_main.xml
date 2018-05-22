@@ -21,7 +21,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintVertical_bias="0.0">
 
         <TextView
             android:id="@+id/welcomeTxt"
@@ -41,6 +41,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="143dp"
             android:background="@color/colorAccent"
+            android:onClick="login"
             android:text="Iniciar sesión" />
 
         <TextView
@@ -49,8 +50,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
-            android:layout_marginBottom="68dp"
-            android:layout_marginStart="36dp"
+            android:layout_marginBottom="35dp"
+            android:layout_marginStart="29dp"
             android:text="Si aún no tenés cuenta, podés" />
 
         <EditText
@@ -61,10 +62,10 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="185dp"
             android:ems="10"
+            android:hint="Contraseña"
             android:inputType="textPassword"
             tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="84dp"
-            android:hint="Contraseña"/>
+            tools:layout_editor_absoluteY="84dp" />
 
         <TextView
             android:id="@+id/textView3"
@@ -85,8 +86,18 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="111dp"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Email" />
+            android:hint="Email"
+            android:inputType="textPersonName" />
+
+        <ProgressBar
+            android:id="@+id/progressBarLogin"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center|bottom"
+            android:layout_marginBottom="66dp"
+            android:visibility="visible" />
 
     </RelativeLayout>
 
