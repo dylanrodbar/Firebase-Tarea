@@ -10,29 +10,36 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 public class AddItem extends AppCompatActivity {
     private Button btnAddPhoto;
     private ImageView imgCell;
     private ProgressBar progressBar;
+    private Uri uri = null;
+    private EditText name;
+    private EditText price;
+    private EditText description;
+    DatabaseReference productDatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +48,10 @@ public class AddItem extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBarNewItem);
         btnAddPhoto = findViewById(R.id.btnAddPhoto);
         imgCell = findViewById(R.id.imageView);
+        name = findViewById(R.id.itemNameCreate);
+        price = findViewById(R.id.priceCreate);
+        description = findViewById(R.id.descriptionCreate);
+        productDatabase = FirebaseDatabase.getInstance().getReference("productos");
 
         btnAddPhoto.setOnClickListener(new Button.OnClickListener() {
 
@@ -59,12 +70,11 @@ public class AddItem extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK){
-            Uri targetUri = data.getData();
-            uploadImageToCloudinary(targetUri);
+            uri = data.getData();
             //textTargetUri.setText(targetUri.toString());
             Bitmap bitmap;
             try {
-                bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
+                bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));
                 imgCell.setImageBitmap(bitmap);
             } catch (FileNotFoundException e) {
                 // TODO Auto-generated catch block
@@ -74,7 +84,39 @@ public class AddItem extends AppCompatActivity {
     }
 
     public void addNewItem(View view) {
+
+        String nameStr = name.getText().toString();
+        String priceStr = price.getText().toString();
+        String descriptionStr = description.getText().toString();
+        if(TextUtils.isEmpty(nameStr)) {
+
+            Toast.makeText(getApplicationContext(), "Ingresa un nombre", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(TextUtils.isEmpty(priceStr)) {
+
+            Toast.makeText(getApplicationContext(), "Ingresa un precio", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(TextUtils.isEmpty(descriptionStr)) {
+
+            Toast.makeText(getApplicationContext(), "Ingresa una descripción", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(uri == null) {
+
+            Toast.makeText(getApplicationContext(), "Debe adjuntar un archivo", Toast.LENGTH_SHORT).show();
+            return;
+
+        }
         progressBar.setVisibility(View.VISIBLE);
+
+        uploadImageToFirebase(nameStr, priceStr, descriptionStr);
+
+        progressBar.setVisibility(View.GONE);
 
 
 
@@ -95,7 +137,7 @@ public class AddItem extends AppCompatActivity {
         }
     }
 
-    public void uploadImageToCloudinary(Uri targetUri) {
+    public void uploadImageToFirebase(final String name, final String price, final String description) {
         FirebaseStorage storage;
         StorageReference storageReference;
 
@@ -104,12 +146,15 @@ public class AddItem extends AppCompatActivity {
         storageReference = storage.getReference();
 
         StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
-        ref.putFile(targetUri)
+        ref.putFile(uri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Toast.makeText(AddItem.this, taskSnapshot.getDownloadUrl().toString(), Toast.LENGTH_SHORT).show();
-
+                        String path = taskSnapshot.getDownloadUrl().toString();
+                        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
+                        Item item = new Item(name, price, path, description, userId);
+                        String id = productDatabase.push().getKey();
+                        productDatabase.child(id).setValue(item);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -125,6 +170,8 @@ public class AddItem extends AppCompatActivity {
                                 .getTotalByteCount());
                     }
                 });
+
+
 
 
 

@@ -28,6 +28,7 @@ public class ItemsActivity extends AppCompatActivity {
     private DatabaseReference mFirebaseDatabase;
     private FirebaseDatabase mFirebaseInstance;
     private TextView txtEmail;
+
     public static final String EXTRA_MESSAGE = "com.example.dylan.firebase_app";
 
 
