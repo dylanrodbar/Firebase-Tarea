@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundcolor"
+    tools:context=".AddItem">
+
+    <RelativeLayout
+        android:layout_width="345dp"
+        android:layout_height="490dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/txtNewItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="74dp"
+            android:layout_marginTop="23dp"
+            android:text="Creando un nuevo producto" />
+
+        <EditText
+            android:id="@+id/itemNameCreate"
+            android:layout_width="238dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="62dp"
+            android:ems="10"
+            android:hint="Nombre"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/priceCreate"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="118dp"
+            android:ems="10"
+            android:hint="Precio"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/descriptionCreate"
+            android:layout_width="241dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="179dp"
+            android:ems="10"
+            android:hint="Descripción"
+            android:inputType="textPersonName" />
+
+        <Button
+            android:id="@+id/btnAddPhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/itemNameCreate"
+            android:layout_marginBottom="209dp"
+            android:background="@color/colorAccent"
+            android:text="Adjuntar foto" />
+
+        <Button
+            android:id="@+id/btnInsertItem"
+            android:layout_width="235dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="11dp"
+            android:background="@color/colorAccent"
+            android:onClick="addNewItem"
+            android:text="Añadir producto" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="321dp"
+            android:layout_height="147dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/btnAddPhoto"
+            android:layout_marginStart="11dp"
+            android:layout_marginTop="-208dp"
+            app:srcCompat="@android:color/transparent" />
+
+        <ProgressBar
+            android:id="@+id/progressBarNewItem"
+            android:layout_width="67dp"
+            android:layout_height="64dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center|bottom"
+            android:layout_marginBottom="103dp"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

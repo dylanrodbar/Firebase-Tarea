@@ -32,11 +32,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //auth = FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();
 
-        //if(auth.getCurrentUser() != null) {
-        //    openItemsActivity();
-        //}
+        if(auth.getCurrentUser() != null) {
+            openItemsActivity();
+        }
 
         setContentView(R.layout.activity_main);
 
