@@ -112,11 +112,9 @@ public class AddItem extends AppCompatActivity {
             return;
 
         }
-        progressBar.setVisibility(View.VISIBLE);
 
         uploadImageToFirebase(nameStr, priceStr, descriptionStr);
 
-        progressBar.setVisibility(View.GONE);
 
 
 
@@ -146,6 +144,7 @@ public class AddItem extends AppCompatActivity {
         storageReference = storage.getReference();
 
         StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
+        progressBar.setVisibility(View.VISIBLE);
         ref.putFile(uri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -155,6 +154,9 @@ public class AddItem extends AppCompatActivity {
                         Item item = new Item(name, price, path, description, userId);
                         String id = productDatabase.push().getKey();
                         productDatabase.child(id).setValue(item);
+                        progressBar.setVisibility(View.GONE);
+                        startActivity(new Intent(AddItem.this, ItemsActivity.class));
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

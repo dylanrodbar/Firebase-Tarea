@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import android.text.TextUtils;
@@ -28,6 +29,8 @@ public class ItemsActivity extends AppCompatActivity {
     private DatabaseReference mFirebaseDatabase;
     private FirebaseDatabase mFirebaseInstance;
     private TextView txtEmail;
+    private ProgressBar progressBar;
+
 
     public static final String EXTRA_MESSAGE = "com.example.dylan.firebase_app";
 
@@ -39,6 +42,7 @@ public class ItemsActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         txtEmail = findViewById(R.id.txtUserEmail);
+        progressBar = findViewById(R.id.progressBarSignout);
         loadUserData();
 
         mFirebaseInstance = FirebaseDatabase.getInstance();
@@ -61,6 +65,8 @@ public class ItemsActivity extends AppCompatActivity {
     public void signout(View view) {
 
 
+        progressBar.setVisibility(View.VISIBLE);
+
         auth.signOut();
 
         FirebaseUser user = auth.getCurrentUser();
@@ -72,6 +78,8 @@ public class ItemsActivity extends AppCompatActivity {
             return;
         }
 
+        progressBar.setVisibility(View.GONE);
+
 
 
     }
@@ -82,5 +90,10 @@ public class ItemsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        progressBar.setVisibility(View.GONE);
+    }
 
 }
