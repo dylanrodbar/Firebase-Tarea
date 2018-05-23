@@ -18,7 +18,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
@@ -64,7 +64,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_width="297dp"
+            android:layout_width="match_parent"
             android:layout_height="362dp"
             android:layout_centerInParent="true">
 
@@ -75,7 +75,15 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:visibility="gone"/>
+                android:visibility="gone" />
+
+            <ListView
+                android:id="@+id/listView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="0dp" />
         </RelativeLayout>
 
         <android.support.design.widget.FloatingActionButton
@@ -83,8 +91,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginBottom="12dp"
+            android:layout_marginEnd="15dp"
             android:clickable="true"
             android:onClick="createItem"
             android:tint="@color/common_google_signin_btn_text_dark_focused"

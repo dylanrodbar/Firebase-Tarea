@@ -151,8 +151,8 @@ public class AddItem extends AppCompatActivity {
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         String path = taskSnapshot.getDownloadUrl().toString();
                         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
-                        Item item = new Item(name, price, path, description, userId);
                         String id = productDatabase.push().getKey();
+                        Item item = new Item(name, price, path, description, userId, id);
                         productDatabase.child(id).setValue(item);
                         progressBar.setVisibility(View.GONE);
                         startActivity(new Intent(AddItem.this, ItemsActivity.class));

@@ -7,14 +7,17 @@ public class Item {
     private String photo;
     private String description;
     private String userId;
+    private String id;
 
-    public Item(String name, String price, String photo, String description, String userId) {
+    public Item(String name, String price, String photo, String description, String userId, String id) {
         this.setName(name);
         this.setPrice(price);
         this.setPhoto(photo);
         this.setDescription(description);
         this.setUserId(userId);
+        this.setId(id);
     }
+    public Item(){}
 
 
     public String getName() {
@@ -56,5 +59,13 @@ public class Item {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
