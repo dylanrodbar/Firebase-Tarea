@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
-        android:layout_width="277dp"
+        android:layout_width="341dp"
         android:layout_height="58dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
@@ -15,7 +15,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -23,16 +23,16 @@
             android:id="@+id/txtNameL"
             android:layout_width="95dp"
             android:layout_height="39dp"
-            android:layout_alignTop="@+id/deleteButtonL"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="16dp"
             android:text="txtNameL" />
 
         <TextView
             android:id="@+id/txtPriceL"
             android:layout_width="93dp"
             android:layout_height="40dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignTop="@+id/txtNameL"
-            android:layout_marginEnd="66dp"
+            android:layout_centerHorizontal="true"
             android:text="txtPriceL" />
 
         <android.support.design.widget.FloatingActionButton
@@ -40,9 +40,19 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="12dp"
+            android:layout_marginEnd="13dp"
             android:clickable="true"
             android:tint="@android:color/background_dark"
             app:srcCompat="@android:drawable/ic_delete" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/btnDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="73dp"
+            android:clickable="true"
+            android:tint="@android:color/background_dark"
+            app:srcCompat="@android:drawable/ic_input_get" />
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

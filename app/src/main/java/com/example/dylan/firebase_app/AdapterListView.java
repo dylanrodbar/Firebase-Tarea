@@ -2,6 +2,7 @@ package com.example.dylan.firebase_app;
 
 import android.app.Activity;
 import android.content.ContentUris;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -34,6 +35,8 @@ public class AdapterListView extends ArrayAdapter<Item> {
     private final Activity context;
     private List<Item> items = null;
     DatabaseReference productDatabase;
+    public static final String EXTRA_MESSAGE = "com.example.dylan.firebase_app";
+
 
 
     public AdapterListView(Activity context, List<Item> items) {
@@ -54,6 +57,7 @@ public class AdapterListView extends ArrayAdapter<Item> {
         TextView txtName = (TextView) rowView.findViewById(R.id.txtNameL);
         TextView txtPrice = (TextView) rowView.findViewById(R.id.txtPriceL);
         FloatingActionButton deleteButton = rowView.findViewById(R.id.deleteButtonL);
+        final FloatingActionButton detailButton = rowView.findViewById(R.id.btnDetail);
 
         txtName.setText(items.get(position).getName());
         txtPrice.setText(items.get(position).getPrice());
@@ -64,7 +68,15 @@ public class AdapterListView extends ArrayAdapter<Item> {
             public void onClick(View v) {
                 deleteItem(items.get(position));
             }
-        });;
+        });
+
+        detailButton.setOnClickListener(new Button.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                detailItem(items.get(position));
+            }
+        });
 
 
 
@@ -85,6 +97,18 @@ public class AdapterListView extends ArrayAdapter<Item> {
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("productos").child(item.getId());
         reference.removeValue();
+
+    }
+
+    public void detailItem(Item item) {
+        Intent intent = new Intent(context, ItemDetail.class);
+        intent.putExtra(EXTRA_MESSAGE, "");
+        intent.putExtra("name", item.getName());
+        intent.putExtra("price", item.getPrice());
+        intent.putExtra("description", item.getDescription());
+        intent.putExtra("path", item.getPhoto());
+
+        context.startActivity(intent);
 
     }
 

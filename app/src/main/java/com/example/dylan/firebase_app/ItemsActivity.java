@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -88,13 +89,40 @@ public class ItemsActivity extends AppCompatActivity {
                     String id = productSnapshot.getKey();
 
                     Item item = new Item(name, price, photo, description, userId, id);
-                    itemsL.add(item);
+                    FirebaseUser user = auth.getCurrentUser();
+                    String uid = user.getUid();
+                    if(uid.compareTo(productSnapshot.getValue(Item.class).getUserId()) == 0) {
+                        itemsL.add(item);
+                    }
+
+
 
                 }
 
                 //Toast.makeText(ItemsActivity.this, itemsL.get(2).getName(), Toast.LENGTH_SHORT).show();
                 AdapterListView adapter = new AdapterListView(ItemsActivity.this, itemsL);
                 list.setAdapter(adapter);
+                list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view,
+                                            int position, long id) {
+                        // TODO Auto-generated method stub
+                        //String Slecteditem= itemname[+position];
+                        //Toast.makeText(getApplicationContext(), Slecteditem, Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent(getApplicationContext(), ItemDetail.class);
+                        intent.putExtra(EXTRA_MESSAGE, "");
+                        intent.putExtra("name", items.get(position).getName());
+                        intent.putExtra("price", items.get(position).getPrice());
+                        intent.putExtra("description", items.get(position).getDescription());
+                        intent.putExtra("path", items.get(position).getPhoto());
+
+                        startActivity(intent);
+
+
+                    }
+                });
 
             }
 
@@ -110,10 +138,6 @@ public class ItemsActivity extends AppCompatActivity {
 
     public void createItem(View view) {
         startActivity(new Intent(ItemsActivity.this, AddItem.class));
-    }
-
-    public void saveItem(View view) {
-
     }
 
     public void loadUserData() {
